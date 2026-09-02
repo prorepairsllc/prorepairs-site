@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProRepairs LLC — Property Maintenance Operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --navy: #14293F;
+        --navy-soft: #1F3A56;
+        --blue: #0077A8;
+        --orange: #E8871E;
+        --bg: #FFFFFF;
+        --bg-soft: #F6F8FA;
+        --border: #E2E6EA;
+        --border-on-navy: rgba(255,255,255,0.14);
+        --text: #1C2833;
+        --text-muted: #5B6770;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.55;
+        color: var(--text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+        font-family: 'Fraunces', Georgia, serif;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .logo-block {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .logo { width: 145px; height: auto; display: block; }
+
+    .header-divider {
+        width: 1px;
+        height: 30px;
+        background: var(--border);
+        flex-shrink: 0;
+    }
+
+    .header-tagline {
+        font-size: 12px;
+        color: var(--text-muted);
+        font-weight: 500;
+        line-height: 1.4;
+        max-width: 180px;
+        display: none;
+    }
+
+    @media (min-width: 640px) {
+        .header-tagline { display: block; }
+    }
+
+    /* ===== FULL-WIDTH BAND SYSTEM =====
+       Every section is a full-bleed band. Bands alternate
+       background so the page reads as one continuous strip,
+       not stacked cards. */
+
+    .band { padding: 46px 0; }
+    .band-navy { background: var(--navy); color: white; }
+    .band-white { background: var(--bg); }
+    .band-soft { background: var(--bg-soft); }
+
+    .band-navy h2 { color: white; }
+    .band-navy .section-lead { color: rgba(255,255,255,0.68); }
+
+    /* Hero (first band, taller) */
+    .hero { padding: 54px 0 40px; text-align: center; }
+    .hero-inner { max-width: 620px; margin: 0 auto; }
+    .hero h1 {
+        font-size: 33px;
+        margin-bottom: 12px;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+    }
+    .hero p {
+        font-size: 15px;
+        color: rgba(255,255,255,0.8);
+        max-width: 540px;
+        margin: 0 auto;
+    }
+
+    /* Slogans sit inline within hero band, no separate box */
+    .slogans-row {
+        display: flex;
+        justify-content: center;
+        gap: 36px;
+        flex-wrap: wrap;
+        margin-top: 26px;
+        padding-top: 22px;
+        border-top: 1px solid var(--border-on-navy);
+    }
+    .slogan-item {
+        font-size: 11.5px;
+        font-weight: 600;
+        color: rgba(255,255,255,0.85);
+        letter-spacing: 0.03em;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+    .slogan-item::before {
+        content: '';
+        width: 5px; height: 5px; border-radius: 50%;
+        background: var(--orange);
+        flex-shrink: 0;
+    }
+
+    /* Stats sit directly under hero, same navy band, no gap/border break */
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        margin-top: 34px;
+        padding-top: 30px;
+        border-top: 1px solid var(--border-on-navy);
+    }
+    .stat { text-align: center; }
+    .stat-number {
+        font-family: 'Fraunces', serif;
+        font-size: 27px;
+        font-weight: 600;
+        color: white;
+        line-height: 1;
+        margin-bottom: 4px;
+    }
+    .stat-label {
+        font-size: 10.5px;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-weight: 600;
+    }
+
+    /* Section headers within bands */
+    .section-title {
+        font-size: 21px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--navy);
+    }
+    .section-lead {
+        font-size: 13.5px;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+        max-width: 560px;
+    }
+    .band p {
+        font-size: 14.5px;
+        line-height: 1.7;
+        margin-bottom: 10px;
+    }
+    .band-white p, .band-soft p { color: var(--text); }
+    .band ul { margin-left: 18px; font-size: 14.5px; line-height: 1.8; }
+    .band li { margin-bottom: 5px; }
+
+    /* Connector rail — a thin vertical thread running through
+       the content bands, visually stitching sections together
+       as one continuous flow rather than isolated blocks. */
+    .rail-wrap { position: relative; }
+    .rail-wrap::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(180deg, var(--orange) 0%, var(--blue) 100%);
+    }
+    .rail-wrap .container { padding-left: 40px; }
+
+    /* Accordion */
+    .accordion-group { border: 1px solid var(--border); background: var(--bg); }
+    .accordion-item { border-bottom: 1px solid var(--border); }
+    .accordion-item:last-child { border-bottom: none; }
+    .accordion-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 13px 18px; background: var(--bg); border: none; cursor: pointer;
+        font-size: 13.5px; font-weight: 600; color: var(--navy); width: 100%;
+        text-align: left; transition: background 0.15s; font-family: 'Inter', sans-serif;
+    }
+    .accordion-header:hover, .accordion-header.active { background: var(--bg-soft); }
+    .accordion-toggle { font-size: 14px; color: var(--orange); transition: transform 0.2s; flex-shrink: 0; }
+    .accordion-toggle.open { transform: rotate(180deg); }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out; background: var(--bg-soft); }
+    .accordion-content.open { max-height: 400px; }
+    .accordion-content-inner { padding: 14px 18px 16px; }
+    .accordion-content p { font-size: 13px; line-height: 1.65; color: var(--text-muted); margin: 0; }
+
+    /* Timeline — continuous connecting line down the middle */
+    .timeline { position: relative; margin-top: 6px; }
+    .timeline-item {
+        display: grid; grid-template-columns: 90px 1fr; gap: 16px;
+        padding: 16px 0;
+    }
+    .timeline-item:not(:last-child) { border-bottom: 1px solid var(--border-on-navy); }
+    .timeline-year {
+        font-family: 'Fraunces', serif; font-weight: 600; font-size: 13.5px;
+        color: var(--orange);
+    }
+    .timeline-text { font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,0.75); }
+    .timeline-text strong { color: white; }
+
+    /* Differentiators — flat, no heavy card borders, just top accent */
+    .diff-grid {
+        display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px;
+        margin-top: 4px;
+    }
+    .diff-card { border-top: 2px solid var(--orange); padding-top: 12px; }
+    .diff-card h4 { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; font-family: 'Inter', sans-serif; }
+    .diff-card p { font-size: 12.5px; line-height: 1.6; color: var(--text-muted); margin: 0; }
+
+    /* Footer */
+    .footer-band { text-align: center; }
+    .footer-band h2 { font-size: 20px; margin-bottom: 10px; color: white; }
+    .footer-band p { font-size: 13.5px; color: rgba(255,255,255,0.7); max-width: 460px; margin: 0 auto 20px; }
+    .contact-link {
+        display: inline-block; padding: 10px 26px; background: var(--orange);
+        color: white; text-decoration: none; font-size: 12.5px; font-weight: 600;
+        letter-spacing: 0.02em; transition: background 0.2s;
+    }
+    .contact-link:hover { background: #d47714; }
+    .footer-text {
+        font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 22px;
+        padding-top: 16px; border-top: 1px solid var(--border-on-navy);
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+        .band { padding: 32px 0; }
+        .hero { padding: 36px 0 28px; }
+        .hero h1 { font-size: 25px; }
+        .hero p { font-size: 13.5px; }
+        .stats-row { grid-template-columns: repeat(2, 1fr); row-gap: 20px; }
+        .stat-number { font-size: 22px; }
+        .diff-grid { grid-template-columns: 1fr; gap: 16px; }
+        .timeline-item { grid-template-columns: 1fr; gap: 4px; }
+        .section-title { font-size: 18px; }
+        .slogans-row { gap: 18px; }
+        .logo { width: 115px; }
+        .rail-wrap .container { padding-left: 22px; }
+        .rail-wrap::before { width: 2px; }
+    }
+</style>
+</head>
+<body>
+<header>
+    <div class="container header-inner">
+        <div class="logo-block">
+            <img src="prorepairsLLC_logo.jpg" alt="ProRepairs LLC" class="logo">
+            <div class="header-divider"></div>
+            <div class="header-tagline">Multi-state property maintenance operations</div>
+        </div>
+        <svg width="32" height="32" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="17" cy="17" r="16" stroke="#E2E6EA" stroke-width="1"/>
+            <path d="M17 8L23 12V22L17 26L11 22V12L17 8Z" stroke="#0077A8" stroke-width="1.4" stroke-linejoin="round"/>
+            <circle cx="17" cy="17" r="3" fill="#E8871E"/>
+        </svg>
+    </div>
+</header>
+
+<main>
+
+    <!-- HERO + SLOGANS + STATS: one unbroken navy band -->
+    <section class="band band-navy hero">
+        <div class="container hero-inner">
+            <h1>Scaled Property Maintenance Operations</h1>
+            <p>Multi-state service delivery, distributed vendor management, and operational infrastructure built for measurable performance.</p>
+            <div class="slogans-row">
+                <div class="slogan-item">We Put the PRO Back in Professional</div>
+                <div class="slogan-item">Test, Don't Guess</div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="stats-row">
+                <div class="stat"><div class="stat-number">127K+</div><div class="stat-label">Annual Transactions</div></div>
+                <div class="stat"><div class="stat-number">12–20</div><div class="stat-label">Contractor Network</div></div>
+                <div class="stat"><div class="stat-number">5</div><div class="stat-label">Service Departments</div></div>
+                <div class="stat"><div class="stat-number">2</div><div class="stat-label">States (MI / FL)</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OPERATIONS AT SCALE: white band, flows directly from hero -->
+    <section class="band band-white">
+        <div class="container">
+            <h2 class="section-title">Operations at Scale</h2>
+            <p>ProRepairs built a multi-state property maintenance and HVAC service platform, scaling to 127,000+ annual transactions across Michigan and Florida. The operation combines distributed field teams, integrated vendor networks, and custom workflow systems — delivering predictable service standards across a complex, multi-site portfolio.</p>
+        </div>
+    </section>
+
+    <!-- OPERATIONAL FRAMEWORK: soft band -->
+    <section class="band band-soft">
+        <div class="container">
+            <h2 class="section-title">Operational Framework</h2>
+            <p class="section-lead">A systems-first approach to property maintenance at scale.</p>
+            <div class="accordion-group">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Intake &amp; Dispatch</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Custom platform for volume and precision. Replaced third-party SaaS to optimize for multi-state operations, handling 127K+ annual transactions with minimal manual routing.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Vendor Network</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>12–20 integrated contractors, performance-managed through a unified workflow system. Every vendor interaction tracked, quality monitored, performance tied to portfolio outcomes.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Service Departments</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>HVAC, plumbing, electrical, appliance diagnostics, inspections. Standardized SOPs across all locations — same quality standard regardless of geography.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Quality Standards</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Consistent delivery across distributed teams. Portfolio-level performance visibility, metrics tracked in real time, bottlenecks resolved proactively.</p>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMERCIAL FM: white band -->
+    <section class="band band-white">
+        <div class="container">
+            <h2 class="section-title">Commercial Facilities Management</h2>
+            <p class="section-lead">Scaled operations expertise applied to commercial FM environments — vendor accountability and predictable performance across multi-site portfolios.</p>
+            <div class="accordion-group">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Vendor Accountability</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Integration of external contractors into a unified operational framework. Real-time visibility into work quality, completion timelines, and standards compliance — tied to portfolio outcomes, not individual site decisions.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Lease-Risk Management</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Multi-site lease obligations tracked at portfolio level. CAM tracking, deferred-maintenance backlog management, capital vs. lease-covered repair triangulation, and proactive documentation to minimize disputes.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Operations Systems &amp; Standardization</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Moving from ad-hoc, site-level decisions to scalable, repeatable processes. Custom intake systems route work appropriately, with clear ownership across maintenance, housekeeping, guest services, and owner relations.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Portfolio-Level Spend Optimization</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Consolidated visibility into maintenance spend and vendor pricing across sites. Data-driven identification of spend leaks and performance gaps, preventing reactive, emergency-mode repairs.</p>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPANY EVOLUTION: navy band, timeline with rail -->
+    <section class="band band-navy rail-wrap">
+        <div class="container">
+            <h2 class="section-title" style="color:white;">Company Evolution</h2>
+            <p class="section-lead">A disciplined trajectory of operational scaling and strategic adaptation.</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2017–2019</div>
+                    <div class="timeline-text"><strong>Foundation.</strong> Single-person diagnostics and property maintenance operation, built on accuracy and trust rather than high-volume churn.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2020–2021</div>
+                    <div class="timeline-text"><strong>Strategic pivot.</strong> Residential HVAC and appliance demand surged; transitioned to full-service repair and replacement, integrating property maintenance into a comprehensive portfolio.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2022–2024</div>
+                    <div class="timeline-text"><strong>Scale &amp; optimization.</strong> Custom intake/dispatch platform built, SOPs standardized across departments, growing to 127K+ annual transactions.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-text"><strong>Acquisition.</strong> Acquired by private equity investors; platform, vendor network, and systems integrated into a broader property management portfolio.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW WE OPERATE DIFFERENTLY: white band -->
+    <section class="band band-white">
+        <div class="container">
+            <h2 class="section-title">How We Operate Differently</h2>
+            <div class="diff-grid">
+                <div class="diff-card">
+                    <h4>Systems Over Heroics</h4>
+                    <p>Custom workflow infrastructure instead of managing exceptions manually — operations repeatable, not dependent on key individuals.</p>
+                </div>
+                <div class="diff-card">
+                    <h4>Vendor Performance</h4>
+                    <p>Contractor network integrated into one system. Full visibility and accountability drives vendor selection and negotiation.</p>
+                </div>
+                <div class="diff-card">
+                    <h4>Consistency at Scale</h4>
+                    <p>Standardized delivery across two states and five departments. Quality doesn't degrade as volume grows.</p>
+                </div>
+                <div class="diff-card">
+                    <h4>Data-Driven Operations</h4>
+                    <p>Real-time metrics built into every process, used to identify bottlenecks and improve margins.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICE SCOPE: soft band -->
+    <section class="band band-soft">
+        <div class="container">
+            <h2 class="section-title">Service Scope</h2>
+            <ul>
+                <li>HVAC maintenance, diagnostics, and repair</li>
+                <li>Plumbing diagnostics and repair</li>
+                <li>Electrical diagnostics and repair</li>
+                <li>Appliance diagnostics, repair, and replacement</li>
+                <li>Residential inspections</li>
+                <li>Property maintenance (multi-unit coordination)</li>
+                <li>Vendor network coordination and management</li>
+                <li>Commercial facilities management systems design</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FOOTER CTA: navy band -->
+    <section class="band band-navy footer-band">
+        <div class="container">
+            <h2>Interested in Learning More?</h2>
+            <p>ProRepairs was built on disciplined operations, vendor management, and measurable performance. For inquiries about the platform, operations model, or related engagement:</p>
+            <a href="https://www.linkedin.com/company/79043590/" class="contact-link">LinkedIn Company</a>
+            <div class="footer-text">
+                <p>&copy; 2025 ProRepairs LLC.</p>
+                <p>Serving Michigan and Florida | 127,000+ Annual Transactions</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script>
+    function toggleAccordion(header) {
+        const content = header.nextElementSibling;
+        const toggle = header.querySelector('.accordion-toggle');
+        const group = header.closest('.accordion-group');
+        const allHeaders = group.querySelectorAll('.accordion-header');
+        const allContents = group.querySelectorAll('.accordion-content');
+        const allToggles = group.querySelectorAll('.accordion-toggle');
+
+        allHeaders.forEach(h => h.classList.remove('active'));
+        allContents.forEach(c => c.classList.remove('open'));
+        allToggles.forEach(t => t.classList.remove('open'));
+
+        header.classList.add('active');
+        content.classList.add('open');
+        toggle.classList.add('open');
+    }
+</script>
+</body>
+</html>
