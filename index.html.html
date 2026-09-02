@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProRepairs LLC — Property Maintenance Operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --navy: #14293F;
+        --navy-soft: #1F3A56;
+        --blue: #0077A8;
+        --orange: #E8871E;
+        --bg: #FFFFFF;
+        --bg-soft: #F6F8FA;
+        --border: #E2E6EA;
+        --border-on-navy: rgba(255,255,255,0.14);
+        --text: #1C2833;
+        --text-muted: #5B6770;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.55;
+        color: var(--text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+        font-family: 'Fraunces', Georgia, serif;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    header {
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 0;
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .logo-block { display: flex; align-items: center; gap: 14px; }
+    .logo { width: 140px; height: auto; display: block; }
+    .header-divider { width: 1px; height: 28px; background: var(--border); flex-shrink: 0; }
+    .header-tagline { font-size: 12px; color: var(--text-muted); font-weight: 500; max-width: 180px; display: none; }
+    @media (min-width: 640px) { .header-tagline { display: block; } }
+
+    /* Sticky scroll-spy nav */
+    .subnav {
+        background: var(--navy);
+        position: sticky;
+        top: 0;
+        z-index: 99;
+        border-bottom: 1px solid var(--border-on-navy);
+    }
+    .subnav-inner {
+        display: flex;
+        gap: 4px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding: 0 24px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .subnav-inner::-webkit-scrollbar { display: none; }
+    .subnav a {
+        color: rgba(255,255,255,0.6);
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 13px 12px;
+        white-space: nowrap;
+        border-bottom: 2px solid transparent;
+        transition: color 0.15s, border-color 0.15s;
+        letter-spacing: 0.01em;
+    }
+    .subnav a:hover { color: rgba(255,255,255,0.9); }
+    .subnav a.active { color: white; border-bottom-color: var(--orange); }
+
+    /* Bands */
+    .band { padding: 46px 0; }
+    .band-navy { background: var(--navy); color: white; }
+    .band-white { background: var(--bg); }
+    .band-soft { background: var(--bg-soft); }
+    .band-navy h2 { color: white; }
+    .band-navy .section-lead { color: rgba(255,255,255,0.68); }
+
+    /* Hero */
+    .hero { padding: 48px 0 40px; text-align: center; }
+    .hero-inner { max-width: 620px; margin: 0 auto; }
+    .hero h1 { font-size: 33px; margin-bottom: 12px; line-height: 1.15; letter-spacing: -0.02em; }
+    .hero p { font-size: 15px; color: rgba(255,255,255,0.8); max-width: 540px; margin: 0 auto; }
+
+    .slogans-row {
+        display: flex; justify-content: center; gap: 36px; flex-wrap: wrap;
+        margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--border-on-navy);
+    }
+    .slogan-item {
+        font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.85);
+        letter-spacing: 0.03em; display: flex; align-items: center; gap: 7px;
+    }
+    .slogan-item::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+
+    /* Two-state badge */
+    .state-badge-row {
+        display: flex; align-items: center; justify-content: center; gap: 14px;
+        margin-top: 24px;
+    }
+    .state-pill {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid var(--border-on-navy);
+        padding: 7px 16px;
+        font-size: 12px;
+        font-weight: 600;
+        color: white;
+        letter-spacing: 0.02em;
+    }
+    .state-connector {
+        width: 28px; height: 1px;
+        background: var(--orange);
+        position: relative;
+    }
+    .state-connector::before, .state-connector::after {
+        content: ''; position: absolute; top: -2px; width: 5px; height: 5px;
+        border-radius: 50%; background: var(--orange);
+    }
+    .state-connector::before { left: -2px; }
+    .state-connector::after { right: -2px; }
+
+    /* Stats with counters */
+    .stats-row {
+        display: grid; grid-template-columns: repeat(4, 1fr);
+        margin-top: 30px; padding-top: 28px; border-top: 1px solid var(--border-on-navy);
+    }
+    .stat { text-align: center; }
+    .stat-number {
+        font-family: 'Fraunces', serif; font-size: 27px; font-weight: 600;
+        color: white; line-height: 1; margin-bottom: 4px;
+    }
+    .stat-label {
+        font-size: 10.5px; color: rgba(255,255,255,0.6); text-transform: uppercase;
+        letter-spacing: 0.06em; font-weight: 600;
+    }
+
+    /* Section text */
+    .section-title { font-size: 21px; font-weight: 600; margin-bottom: 6px; color: var(--navy); }
+    .section-lead { font-size: 13.5px; color: var(--text-muted); margin-bottom: 22px; max-width: 560px; }
+    .band p { font-size: 14.5px; line-height: 1.7; margin-bottom: 10px; }
+    .band-white p, .band-soft p { color: var(--text); }
+    .band ul { margin-left: 18px; font-size: 14.5px; line-height: 1.8; }
+    .band li { margin-bottom: 5px; }
+
+    /* Operational flow diagram */
+    .flow-diagram {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+        margin-bottom: 28px;
+        overflow-x: auto;
+    }
+    .flow-step {
+        flex: 1;
+        min-width: 130px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        padding: 16px 14px;
+        position: relative;
+        text-align: center;
+    }
+    .flow-step-num {
+        font-family: 'Fraunces', serif;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--orange);
+        margin-bottom: 6px;
+        letter-spacing: 0.05em;
+    }
+    .flow-step-label {
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--navy);
+        line-height: 1.3;
+    }
+    .flow-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        flex-shrink: 0;
+        color: var(--blue);
+        font-size: 14px;
+    }
+    @media (max-width: 640px) {
+        .flow-diagram { flex-direction: column; }
+        .flow-arrow { width: 100%; height: 18px; transform: rotate(90deg); }
+        .flow-step { min-width: unset; }
+    }
+
+    /* Accordion */
+    .accordion-group { border: 1px solid var(--border); background: var(--bg); }
+    .accordion-item { border-bottom: 1px solid var(--border); }
+    .accordion-item:last-child { border-bottom: none; }
+    .accordion-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 13px 18px; background: var(--bg); border: none; cursor: pointer;
+        font-size: 13.5px; font-weight: 600; color: var(--navy); width: 100%;
+        text-align: left; transition: background 0.15s; font-family: 'Inter', sans-serif;
+    }
+    .accordion-header:hover, .accordion-header.active { background: var(--bg-soft); }
+    .accordion-toggle { font-size: 14px; color: var(--orange); transition: transform 0.2s; flex-shrink: 0; }
+    .accordion-toggle.open { transform: rotate(180deg); }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out; background: var(--bg-soft); }
+    .accordion-content.open { max-height: 400px; }
+    .accordion-content-inner { padding: 14px 18px 16px; }
+    .accordion-content p { font-size: 13px; line-height: 1.65; color: var(--text-muted); margin: 0; }
+
+    /* Timeline */
+    .rail-wrap { position: relative; }
+    .rail-wrap::before {
+        content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+        background: linear-gradient(180deg, var(--orange) 0%, var(--blue) 100%);
+    }
+    .rail-wrap .container { padding-left: 40px; }
+    .timeline { position: relative; margin-top: 6px; }
+    .timeline-item { display: grid; grid-template-columns: 90px 1fr; gap: 16px; padding: 16px 0; }
+    .timeline-item:not(:last-child) { border-bottom: 1px solid var(--border-on-navy); }
+    .timeline-year { font-family: 'Fraunces', serif; font-weight: 600; font-size: 13.5px; color: var(--orange); }
+    .timeline-text { font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,0.75); }
+    .timeline-text strong { color: white; }
+
+    /* Differentiators */
+    .diff-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 4px; }
+    .diff-card { border-top: 2px solid var(--orange); padding-top: 12px; }
+    .diff-card h4 { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; font-family: 'Inter', sans-serif; }
+    .diff-card p { font-size: 12.5px; line-height: 1.6; color: var(--text-muted); margin: 0; }
+
+    /* Department icons */
+    .dept-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        margin-bottom: 26px;
+    }
+    .dept-item { text-align: center; }
+    .dept-icon {
+        width: 44px; height: 44px;
+        margin: 0 auto 8px;
+        border: 1.5px solid var(--blue);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .dept-label { font-size: 11px; font-weight: 600; color: var(--navy); line-height: 1.3; }
+    @media (max-width: 640px) {
+        .dept-grid { grid-template-columns: repeat(3, 1fr); row-gap: 18px; }
+    }
+
+    /* Footer */
+    .footer-band { text-align: center; }
+    .footer-band h2 { font-size: 20px; margin-bottom: 10px; color: white; }
+    .footer-band p { font-size: 13.5px; color: rgba(255,255,255,0.7); max-width: 460px; margin: 0 auto 20px; }
+    .contact-link {
+        display: inline-block; padding: 10px 26px; background: var(--orange);
+        color: white; text-decoration: none; font-size: 12.5px; font-weight: 600;
+        letter-spacing: 0.02em; transition: background 0.2s;
+    }
+    .contact-link:hover { background: #d47714; }
+    .footer-text {
+        font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 22px;
+        padding-top: 16px; border-top: 1px solid var(--border-on-navy);
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+        .band { padding: 32px 0; }
+        .hero { padding: 34px 0 26px; }
+        .hero h1 { font-size: 25px; }
+        .hero p { font-size: 13.5px; }
+        .stats-row { grid-template-columns: repeat(2, 1fr); row-gap: 20px; }
+        .stat-number { font-size: 22px; }
+        .diff-grid { grid-template-columns: 1fr; gap: 16px; }
+        .timeline-item { grid-template-columns: 1fr; gap: 4px; }
+        .section-title { font-size: 18px; }
+        .slogans-row { gap: 18px; }
+        .logo { width: 112px; }
+        .rail-wrap .container { padding-left: 22px; }
+        .rail-wrap::before { width: 2px; }
+    }
+</style>
+</head>
+<body>
+<header>
+    <div class="container header-inner">
+        <div class="logo-block">
+            <img src="prorepairsLLC_logo.jpg" alt="ProRepairs LLC" class="logo">
+            <div class="header-divider"></div>
+            <div class="header-tagline">Multi-state property maintenance operations</div>
+        </div>
+        <svg width="32" height="32" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="17" cy="17" r="16" stroke="#E2E6EA" stroke-width="1"/>
+            <path d="M17 8L23 12V22L17 26L11 22V12L17 8Z" stroke="#0077A8" stroke-width="1.4" stroke-linejoin="round"/>
+            <circle cx="17" cy="17" r="3" fill="#E8871E"/>
+        </svg>
+    </div>
+</header>
+
+<nav class="subnav">
+    <div class="subnav-inner">
+        <a href="#operations" data-section="operations">Operations</a>
+        <a href="#framework" data-section="framework">Framework</a>
+        <a href="#facilities" data-section="facilities">Facilities Mgmt</a>
+        <a href="#evolution" data-section="evolution">Evolution</a>
+        <a href="#differently" data-section="differently">Differentiators</a>
+        <a href="#field" data-section="field">In the Field</a>
+        <a href="#scope" data-section="scope">Service Scope</a>
+        <a href="#contact" data-section="contact">Contact</a>
+    </div>
+</nav>
+
+<main>
+
+    <section class="band band-navy hero" id="top">
+        <div class="container hero-inner">
+            <h1>Scaled Property Maintenance Operations</h1>
+            <p>Multi-state service delivery, distributed vendor management, and operational infrastructure built for measurable performance.</p>
+            <div class="slogans-row">
+                <div class="slogan-item">We Put the PRO Back in Professional</div>
+                <div class="slogan-item">Test, Don't Guess</div>
+            </div>
+            <div class="state-badge-row">
+                <div class="state-pill">Michigan</div>
+                <div class="state-connector"></div>
+                <div class="state-pill">Florida</div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="stats-row">
+                <div class="stat"><div class="stat-number" data-count="127000" data-suffix="+">0</div><div class="stat-label">Annual Transactions</div></div>
+                <div class="stat"><div class="stat-number">12–20</div><div class="stat-label">Contractor Network</div></div>
+                <div class="stat"><div class="stat-number" data-count="5">0</div><div class="stat-label">Service Departments</div></div>
+                <div class="stat"><div class="stat-number" data-count="2">0</div><div class="stat-label">States (MI / FL)</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="band band-white" id="operations">
+        <div class="container">
+            <h2 class="section-title reveal">Operations at Scale</h2>
+            <p class="reveal">ProRepairs built a multi-state property maintenance and HVAC service platform, scaling to 127,000+ annual transactions across Michigan and Florida. The operation combines distributed field teams, integrated vendor networks, and custom workflow systems — delivering predictable service standards across a complex, multi-site portfolio.</p>
+        </div>
+    </section>
+
+    <section class="band band-soft" id="framework">
+        <div class="container">
+            <h2 class="section-title reveal">Operational Framework</h2>
+            <p class="section-lead reveal">A systems-first approach to property maintenance at scale.</p>
+
+            <div class="flow-diagram reveal">
+                <div class="flow-step"><div class="flow-step-num">01</div><div class="flow-step-label">Intake</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step"><div class="flow-step-num">02</div><div class="flow-step-label">Dispatch</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step"><div class="flow-step-num">03</div><div class="flow-step-label">Vendor Assignment</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step"><div class="flow-step-num">04</div><div class="flow-step-label">Quality Check</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step"><div class="flow-step-num">05</div><div class="flow-step-label">Completion</div></div>
+            </div>
+
+            <div class="accordion-group reveal">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Intake &amp; Dispatch</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Custom platform for volume and precision. Replaced third-party SaaS to optimize for multi-state operations, handling 127K+ annual transactions with minimal manual routing.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Vendor Network</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>12–20 integrated contractors, performance-managed through a unified workflow system. Every vendor interaction tracked, quality monitored, performance tied to portfolio outcomes.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Service Departments</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>HVAC, plumbing, electrical, appliance diagnostics, inspections. Standardized SOPs across all locations — same quality standard regardless of geography.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Quality Standards</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Consistent delivery across distributed teams. Portfolio-level performance visibility, metrics tracked in real time, bottlenecks resolved proactively.</p>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="band band-white" id="facilities">
+        <div class="container">
+            <h2 class="section-title reveal">Commercial Facilities Management</h2>
+            <p class="section-lead reveal">Scaled operations expertise applied to commercial FM environments — vendor accountability and predictable performance across multi-site portfolios.</p>
+            <div class="accordion-group reveal">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Vendor Accountability</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Integration of external contractors into a unified operational framework. Real-time visibility into work quality, completion timelines, and standards compliance — tied to portfolio outcomes, not individual site decisions.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Lease-Risk Management</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Multi-site lease obligations tracked at portfolio level. CAM tracking, deferred-maintenance backlog management, capital vs. lease-covered repair triangulation, and proactive documentation to minimize disputes.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Operations Systems &amp; Standardization</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Moving from ad-hoc, site-level decisions to scalable, repeatable processes. Custom intake systems route work appropriately, with clear ownership across maintenance, housekeeping, guest services, and owner relations.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Portfolio-Level Spend Optimization</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content"><div class="accordion-content-inner">
+                        <p>Consolidated visibility into maintenance spend and vendor pricing across sites. Data-driven identification of spend leaks and performance gaps, preventing reactive, emergency-mode repairs.</p>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="band band-navy rail-wrap" id="evolution">
+        <div class="container">
+            <h2 class="section-title reveal" style="color:white;">Company Evolution</h2>
+            <p class="section-lead reveal">A disciplined trajectory of operational scaling and strategic adaptation.</p>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-year">2017–2019</div>
+                    <div class="timeline-text"><strong>Foundation.</strong> Single-person diagnostics and property maintenance operation, built on accuracy and trust rather than high-volume churn.</div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-year">2020–2021</div>
+                    <div class="timeline-text"><strong>Strategic pivot.</strong> Residential HVAC and appliance demand surged; transitioned to full-service repair and replacement, integrating property maintenance into a comprehensive portfolio.</div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-year">2022–2024</div>
+                    <div class="timeline-text"><strong>Scale &amp; optimization.</strong> Custom intake/dispatch platform built, SOPs standardized across departments, growing to 127K+ annual transactions.</div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-text"><strong>Acquisition.</strong> Acquired by private equity investors; platform, vendor network, and systems integrated into a broader property management portfolio.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="band band-white" id="differently">
+        <div class="container">
+            <h2 class="section-title reveal">How We Operate Differently</h2>
+            <div class="diff-grid reveal">
+                <div class="diff-card">
+                    <h4>Systems Over Heroics</h4>
+                    <p>Custom workflow infrastructure instead of managing exceptions manually — operations repeatable, not dependent on key individuals.</p>
+                </div>
+                <div class="diff-card">
+                    <h4>Vendor Performance</h4>
+                    <p>Contractor network integrated into one system. Full visibility and accountability drives vendor selection and negotiation.</p>
+                </div>
+                <div class="diff-card">
+                    <h4>Consistency at Scale</h4>
+                    <p>Standardized delivery across two states and five departments. Quality doesn't degrade as volume grows.</p>
+                </div>
+                <div class="diff-card">
+                    <h4>Data-Driven Operations</h4>
+                    <p>Real-time metrics built into every process, used to identify bottlenecks and improve margins.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="band band-navy" id="field">
+        <div class="container">
+            <h2 class="section-title reveal" style="color:white;">In the Field</h2>
+            <p class="section-lead reveal">Three engagements where standard protocol caught what a visual check or a quick patch would have missed.</p>
+
+            <div class="accordion-group reveal" style="background: rgba(255,255,255,0.04); border-color: var(--border-on-navy);">
+                <div class="accordion-item" style="border-color: var(--border-on-navy);">
+                    <button class="accordion-header" onclick="toggleAccordion(this)" style="background: transparent; color: white;">
+                        <span>Test, Don't Guess: Catching What Three Contractors Missed</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content" style="background: rgba(255,255,255,0.06);"><div class="accordion-content-inner">
+                        <p style="color: rgba(255,255,255,0.75);">A property's water bill kept climbing. The softener ran constantly. Contractor after contractor signed off the same way: "Everything looks fine. Filter's changed. System's good."</p>
+                        <p style="color: rgba(255,255,255,0.75);">ProRepairs treats "looks fine" as a starting question, not an answer. Standard protocol — moisture testing, thermal imaging, smoke detection for drafts and hidden leaks — runs regardless of what a visual check shows.</p>
+                        <p style="color: rgba(255,255,255,0.75);">Running that protocol turned up a pinhole leak hidden inside a wall — the actual source, missed by every inspection before it because nobody had tested past the surface.</p>
+                        <p style="color: rgba(255,255,255,0.75);">Bringing the original contractor back to fix it went sideways: the repair attempt cut the building's main electrical grounding cable, turning a plumbing fix into an electrical hazard in a different trade entirely. ProRepairs' own electrical team corrected it directly rather than waiting on a second call.</p>
+                        <p style="color: rgba(255,255,255,0.75);">That job changed how ProRepairs vetted every subcontractor afterward. Claimed experience stopped being enough — subs had to walk through their actual tools and methods before being trusted with a job, and how they handled being wrong mattered as much as the fix itself. Not every contractor likes that standard. It can come across as second-guessing their experience. The standard doesn't move anyway: show the work, walk us through it, or we verify it ourselves.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item" style="border-color: var(--border-on-navy);">
+                    <button class="accordion-header" onclick="toggleAccordion(this)" style="background: transparent; color: white;">
+                        <span>Built to Code, Built for Speed: Redesigning Storm Prep</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content" style="background: rgba(255,255,255,0.06);"><div class="accordion-content-inner">
+                        <p style="color: rgba(255,255,255,0.75);">A multi-family property asked for a predictive maintenance evaluation. Somewhere in that walkthrough sat twelve parking lot canopies — high-strength steel cable systems, each one $5,000–$10,000 to replace.</p>
+                        <p style="color: rgba(255,255,255,0.75);">The team was asked a simple question: how long does it take to secure or remove one before a storm? Nobody knew. A test run gave the answer — over four hours, for one canopy. Multiply that by twelve, and a property with real storm-prep time constraints didn't have a real storm-prep plan.</p>
+                        <p style="color: rgba(255,255,255,0.75);">ProRepairs redesigned how the cables were routed and secured, staying within code, built for faster response under pressure. The same crew went from four hours per canopy to five canopies in one hour.</p>
+                        <p style="color: rgba(255,255,255,0.75);">The property didn't ask for a cable redesign. They asked for an evaluation. ProRepairs doesn't stop at what it's called in for.</p>
+                    </div></div>
+                </div>
+                <div class="accordion-item" style="border-color: var(--border-on-navy);">
+                    <button class="accordion-header" onclick="toggleAccordion(this)" style="background: transparent; color: white;">
+                        <span>The Bandaid That Almost Cost a Compressor</span><span class="accordion-toggle">⌄</span>
+                    </button>
+                    <div class="accordion-content" style="background: rgba(255,255,255,0.06);"><div class="accordion-content-inner">
+                        <p style="color: rgba(255,255,255,0.75);">Same property, same evaluation. A second pattern surfaced: maintenance techs were leaning on stop-leak solution to patch HVAC systems instead of finding the actual leak.</p>
+                        <p style="color: rgba(255,255,255,0.75);">Stop-leak isn't a fix. It's a way to make a symptom go quiet while introducing non-condensables into a system — the kind of shortcut that ends in a failed compressor, not a solved problem.</p>
+                        <p style="color: rgba(255,255,255,0.75);">ProRepairs retrained the technicians directly: measureQuick benchmarking, proper documentation for every unit — commissioning records, refrigerant capacity, service history — and real leak-detection method instead of a can of sealant. Techs worked alongside supervisors on the repair-vs-replace call instead of guessing at it.</p>
+                        <p style="color: rgba(255,255,255,0.75);">Two systemic problems, found during a job that was scoped as one evaluation. That's the standard: deliver more than what was promised, because what's asked for is rarely the whole picture.</p>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="band band-soft" id="scope">
+        <div class="container">
+            <h2 class="section-title reveal">Service Scope</h2>
+
+            <div class="dept-grid reveal">
+                <div class="dept-item">
+                    <div class="dept-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2V22M4.9 4.9L19.1 19.1M2 12H22M4.9 19.1L19.1 4.9" stroke="#0077A8" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="dept-label">HVAC</div>
+                </div>
+                <div class="dept-item">
+                    <div class="dept-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.1-3.1a4 4 0 01-5.3 5.3L6.5 20.5a1.5 1.5 0 01-2.1-2.1L13.4 9.4a4 4 0 015.3-5.3l-3.1 3.1z" stroke="#0077A8" stroke-width="1.4" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="dept-label">Plumbing</div>
+                </div>
+                <div class="dept-item">
+                    <div class="dept-icon">
+                        <svg width="16" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 2L4 14H12L11 22L20 10H12L13 2Z" stroke="#0077A8" stroke-width="1.4" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="dept-label">Electrical</div>
+                </div>
+                <div class="dept-item">
+                    <div class="dept-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="3" width="18" height="18" rx="1" stroke="#0077A8" stroke-width="1.4"/>
+                            <circle cx="12" cy="14" r="4" stroke="#0077A8" stroke-width="1.4"/>
+                            <line x1="7" y1="7" x2="9" y2="7" stroke="#0077A8" stroke-width="1.4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="dept-label">Appliance</div>
+                </div>
+                <div class="dept-item">
+                    <div class="dept-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="#0077A8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="dept-label">Inspections</div>
+                </div>
+            </div>
+
+            <ul class="reveal">
+                <li>HVAC maintenance, diagnostics, and repair</li>
+                <li>Plumbing diagnostics and repair</li>
+                <li>Electrical diagnostics and repair</li>
+                <li>Appliance diagnostics, repair, and replacement</li>
+                <li>Residential inspections</li>
+                <li>Property maintenance (multi-unit coordination)</li>
+                <li>Vendor network coordination and management</li>
+                <li>Commercial facilities management systems design</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="band band-navy footer-band" id="contact">
+        <div class="container">
+            <h2>Interested in Learning More?</h2>
+            <p>ProRepairs was built on disciplined operations, vendor management, and measurable performance. For inquiries about the platform, operations model, or related engagement:</p>
+            <a href="https://www.linkedin.com/company/79043590/" class="contact-link">LinkedIn Company</a>
+            <div class="footer-text">
+                <p>&copy; 2025 ProRepairs LLC.</p>
+                <p>Serving Michigan and Florida | 127,000+ Annual Transactions</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script>
+    function toggleAccordion(header) {
+        const content = header.nextElementSibling;
+        const toggle = header.querySelector('.accordion-toggle');
+        const group = header.closest('.accordion-group');
+        const allHeaders = group.querySelectorAll('.accordion-header');
+        const allContents = group.querySelectorAll('.accordion-content');
+        const allToggles = group.querySelectorAll('.accordion-toggle');
+        allHeaders.forEach(h => h.classList.remove('active'));
+        allContents.forEach(c => c.classList.remove('open'));
+        allToggles.forEach(t => t.classList.remove('open'));
+        header.classList.add('active');
+        content.classList.add('open');
+        toggle.classList.add('open');
+    }
+
+    // Scroll-spy nav
+    const sections = document.querySelectorAll('main section[id]');
+    const navLinks = document.querySelectorAll('.subnav a');
+    const spyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('data-section') === id);
+                });
+            }
+        });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => spyObserver.observe(s));
+
+    // Animated counters
+    const counters = document.querySelectorAll('.stat-number[data-count]');
+    const countObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.getAttribute('data-count'), 10);
+                const suffix = el.getAttribute('data-suffix') || '';
+                const duration = 1200;
+                const start = performance.now();
+                function step(now) {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const value = Math.floor(eased * target);
+                    el.textContent = value.toLocaleString() + suffix;
+                    if (progress < 1) requestAnimationFrame(step);
+                    else el.textContent = target.toLocaleString() + suffix;
+                }
+                requestAnimationFrame(step);
+                obs.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+    counters.forEach(c => countObserver.observe(c));
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
